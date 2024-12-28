@@ -1,4 +1,4 @@
-import { ControllerConstructor, Handler, HttpMethod, RoutePath } from '../types';
+import { ControllerConstructor, Handler, HttpMethod, RoutePath } from '@common/types';
 
 type RouteMetadata = {
   method: HttpMethod;

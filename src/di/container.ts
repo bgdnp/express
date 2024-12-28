@@ -1,5 +1,5 @@
-import { NoSuchKeyException } from '../exceptions/di';
-import { Constructor } from '../types';
+import { Constructor } from '@common/types';
+import { NoSuchKeyException } from './exceptions';
 
 type ValueMetadata<T = unknown> = {
   key: string;
@@ -82,3 +82,5 @@ export class Container {
     return (metadata as FactoryMetadata<T>).factory !== undefined;
   }
 }
+
+export const container = new Container();

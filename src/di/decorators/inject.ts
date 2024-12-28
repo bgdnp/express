@@ -1,5 +1,5 @@
-import { container } from '..';
-import { Constructor } from '../../types';
+import { Constructor } from '@common/types';
+import { container } from '../container';
 
 export function Inject<T>(keyOrCls: string | Constructor<T>) {
   const key = typeof keyOrCls === 'string' ? keyOrCls : keyOrCls.name;

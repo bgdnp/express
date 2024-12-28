@@ -1,3 +1,5 @@
+import { HttpStatus } from '@common/enums';
+
 export type Constructor<T = object> = {
   new (...args: unknown[]): T;
 };
@@ -7,7 +9,6 @@ export type ControllerConstructor<T = object> = {
 };
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
-export type HttpStatus = 200 | 201 | 204;
 
 export type RoutePath = `/${string}`;
 

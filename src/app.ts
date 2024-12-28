@@ -1,7 +1,7 @@
+import { ControllerConstructor, Handler, HandlerResult } from '@common/types';
+import { HttpRequest } from '@http/http-request';
+import { RouterMetadata } from '@http/router-metadata';
 import express from 'express';
-import { ControllerConstructor, Handler, HandlerResult } from './types';
-import { RouterMetadata } from './http/router-metadata';
-import { HttpRequest } from './http';
 
 function handleSuccess(result: HandlerResult, res: express.Response) {
   if (result.status === 204) {

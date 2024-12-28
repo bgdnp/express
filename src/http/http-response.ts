@@ -1,4 +1,5 @@
-import { HandlerResult, HttpStatus } from '../types';
+import { HttpStatus } from '@common/enums';
+import { HandlerResult } from '@common/types';
 
 export class HttpResponse {
   static success(status: HttpStatus, body?: object): HandlerResult {
@@ -6,14 +7,14 @@ export class HttpResponse {
   }
 
   static ok(body?: object): HandlerResult {
-    return this.success(200, body);
+    return this.success(HttpStatus.OK, body);
   }
 
   static created(body?: object): HandlerResult {
-    return this.success(201, body);
+    return this.success(HttpStatus.Created, body);
   }
 
   static noContent(): HandlerResult {
-    return this.success(204);
+    return this.success(HttpStatus.NoContent);
   }
 }

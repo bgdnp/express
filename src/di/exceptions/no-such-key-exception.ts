@@ -1,5 +1,5 @@
-import { ErrorCode } from '../error-code';
-import { Exception } from '../exception';
+import { ErrorCode } from '@common/enums';
+import { Exception } from '@common/exception';
 
 export class NoSuchKeyException extends Exception {
   constructor(message?: string) {

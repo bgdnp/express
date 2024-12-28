@@ -9,7 +9,12 @@
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitAny": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@common/*": ["./src/common/*"],
+      "@di/*": ["./src/di/*"],
+      "@http/*": ["./src/http/*"]
+    }
   },
   "include": ["src/**/*"]
 }
