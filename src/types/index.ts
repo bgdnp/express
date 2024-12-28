@@ -7,13 +7,14 @@ export type ControllerConstructor<T = object> = {
 };
 
 export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
-export type HttpStatus = 200 | 201;
+export type HttpStatus = 200 | 201 | 204;
 
 export type RoutePath = `/${string}`;
 
 export type HandlerResult<TBody extends object = object> = {
   status: HttpStatus;
-  body: TBody;
+  body?: TBody;
 };
 
-export type Handler = (...args: unknown[]) => Promise<HandlerResult>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Handler = (...args: any[]) => Promise<HandlerResult>;
