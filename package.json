@@ -1,0 +1,50 @@
+{
+  "name": "@bgdn/express",
+  "version": "0.0.0",
+  "description": "Express wrapper",
+  "main": "dist/index.js",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run format",
+      "npm run lint:fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bgdnp/express.git"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "controllers"
+  ],
+  "author": "Bogdan Petkovic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bgdnp/express/issues"
+  },
+  "homepage": "https://github.com/bgdnp/express#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.3.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}
