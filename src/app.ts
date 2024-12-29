@@ -1,4 +1,7 @@
+import { ErrorCode, HttpStatus } from '@common/enums';
+import { Exception } from '@common/exception';
 import { ControllerConstructor, Handler, HandlerResult } from '@common/types';
+import { HttpException } from '@http/exceptions';
 import { HttpRequest } from '@http/http-request';
 import { RouterMetadata } from '@http/router-metadata';
 import express from 'express';
@@ -12,7 +15,15 @@ function handleSuccess(result: HandlerResult, res: express.Response) {
 }
 
 function handleError(err: unknown, res: express.Response) {
-  res.status(500).json(err);
+  if (err instanceof HttpException) {
+    return res.status(err.status).json(err.response);
+  }
+
+  if (err instanceof Exception) {
+    return res.status(HttpStatus.InternalServerError).json(err.response);
+  }
+
+  return res.status(HttpStatus.InternalServerError).json({ code: ErrorCode.UnexpectedError });
 }
 
 function createHandler(handler: Handler): express.Handler {

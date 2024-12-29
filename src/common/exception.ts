@@ -12,10 +12,10 @@ export class Exception extends Error {
     this.code = options.code;
   }
 
-  json(): string {
-    return JSON.stringify({
+  get response(): { code: string; message: string } {
+    return {
       code: this.code,
       message: this.message,
-    });
+    };
   }
 }
