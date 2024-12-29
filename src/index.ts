@@ -14,4 +14,4 @@ export { HttpResponse } from '@http/http-response';
 
 export { Logger, LOGGER } from '@utilities/logger';
 
-export { createApp } from './app';
+export { createApp } from '@app';

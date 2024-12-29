@@ -11,6 +11,7 @@
     "noImplicitAny": true,
     "skipLibCheck": true,
     "paths": {
+      "@app": ["./src/app"],
       "@common/*": ["./src/common/*"],
       "@di/*": ["./src/di/*"],
       "@http/*": ["./src/http/*"],
