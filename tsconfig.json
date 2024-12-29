@@ -13,7 +13,8 @@
     "paths": {
       "@common/*": ["./src/common/*"],
       "@di/*": ["./src/di/*"],
-      "@http/*": ["./src/http/*"]
+      "@http/*": ["./src/http/*"],
+      "@utilities/*": ["./src/utilities/*"]
     }
   },
   "include": ["src/**/*"]

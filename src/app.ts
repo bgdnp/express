@@ -1,11 +1,24 @@
-import { ErrorCode, HttpStatus } from '@common/enums';
+import { ErrorCode, HttpStatus, LogLevel } from '@common/enums';
 import { Exception } from '@common/exception';
-import { ArgsMapper, ControllerConstructor, Handler, HandlerResult } from '@common/types';
+import {
+  ArgsMapper,
+  Constructor,
+  ControllerConstructor,
+  Handler,
+  HandlerResult,
+} from '@common/types';
+import { container } from '@di/container';
 import { HttpException } from '@http/exceptions';
 import { HttpMiddleware, NEXT, SKIP } from '@http/http-middleware';
 import { HttpRequest } from '@http/http-request';
 import { RouterMetadata } from '@http/router-metadata';
+import { ConsoleLogger, LOG_LEVEL, LOGGER, Logger } from '@utilities/logger';
 import express from 'express';
+
+type AppOptions = {
+  logger: Constructor<Logger>;
+  logLevel: LogLevel;
+};
 
 function handleSuccess(result: HandlerResult, res: express.Response) {
   if (result.status === 204) {
@@ -95,7 +108,10 @@ function useController(app: express.Express, controller: ControllerConstructor) 
   app.use(metadata.prefix, router);
 }
 
-export function createApp() {
+export function createApp(options?: AppOptions) {
+  container.set({ key: LOG_LEVEL, value: options?.logLevel ?? LogLevel.Debug });
+  container.set({ key: LOGGER, cls: options?.logger ?? ConsoleLogger });
+
   const app = express();
 
   return Object.assign(app, {

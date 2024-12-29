@@ -2,26 +2,26 @@ import { Constructor } from '@common/types';
 import { NoSuchKeyException } from './exceptions';
 
 type ValueMetadata<T = unknown> = {
-  key: string;
+  key: string | symbol;
   value: T;
 };
 
 type ConstructorMetadata<T = object> = {
-  key: string;
+  key: string | symbol;
   cls: Constructor<T>;
   deps?: (string | Constructor)[];
 };
 
 type FactoryMetadata<T = unknown> = {
-  key: string;
+  key: string | symbol;
   factory: (c: Container) => T;
 };
 
 type Metadata<T = unknown> = ValueMetadata<T> | ConstructorMetadata<T> | FactoryMetadata<T>;
 
 export class Container {
-  private metadata: Map<string, Metadata> = new Map();
-  private pool: Map<string, unknown> = new Map();
+  private metadata: Map<string | symbol, Metadata> = new Map();
+  private pool: Map<string | symbol, unknown> = new Map();
 
   set<T>(metadata: Metadata<T>): Container;
   set<T>(cls: Constructor<T>): Container;
@@ -36,16 +36,17 @@ export class Container {
     return this;
   }
 
-  get<T>(key: string): T;
+  get<T>(key: string | symbol): T;
   get<T>(cls: Constructor<T>): T;
-  get<T>(keyOrCls: string | Constructor<T>): T {
-    const key = typeof keyOrCls === 'string' ? keyOrCls : keyOrCls.name;
+  get<T>(keyOrCls: string | symbol | Constructor<T>): T {
+    const key =
+      typeof keyOrCls === 'string' || typeof keyOrCls === 'symbol' ? keyOrCls : keyOrCls.name;
 
     if (!this.pool.has(key)) {
       const metadata = this.metadata.get(key);
 
       if (!metadata) {
-        throw new NoSuchKeyException(`Unable to resolve key: "${key}".`);
+        throw new NoSuchKeyException(`Unable to resolve key: "${key.toString()}".`);
       }
 
       if (this.isValue(metadata)) {

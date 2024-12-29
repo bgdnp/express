@@ -12,4 +12,6 @@ export { HttpMiddleware } from '@http/http-middleware';
 export { HttpRequest } from '@http/http-request';
 export { HttpResponse } from '@http/http-response';
 
+export { Logger, LOGGER } from '@utilities/logger';
+
 export { createApp } from './app';
