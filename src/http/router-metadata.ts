@@ -1,21 +1,24 @@
 import { ArgsMapper, ControllerConstructor, Handler, HttpMethod, RoutePath } from '@common/types';
+import { HttpMiddleware } from './http-middleware';
 
 type RouteMetadata = {
   method: HttpMethod;
   path: RoutePath;
   handler: Handler;
   argsMapper?: ArgsMapper;
+  middlewares?: HttpMiddleware[];
 };
 
 type ControllerMetadata = {
   prefix: RoutePath;
   cls: ControllerConstructor;
   routes: RouteMetadata[];
+  middlewares?: HttpMiddleware[];
 };
 
 export class RouterMetadata {
   private static routes: Map<Handler, RouteMetadata> = new Map();
-  private static controllers: Map<string, ControllerMetadata> = new Map();
+  private static controllers: Map<ControllerConstructor, ControllerMetadata> = new Map();
 
   static setRoute(handler: Handler, metadata: Partial<RouteMetadata>) {
     this.routes.set(handler, metadata as RouteMetadata);
@@ -25,21 +28,15 @@ export class RouterMetadata {
     return this.routes.get(handler) ?? null;
   }
 
-  static setController(metadata: Omit<ControllerMetadata, 'routes'>) {
-    this.controllers.set(metadata.cls.name, {
+  static setController(cls: ControllerConstructor, metadata: Partial<ControllerMetadata>) {
+    this.controllers.set(cls, {
       ...metadata,
       routes: [...this.routes.values()],
-    });
+    } as ControllerMetadata);
     this.routes = new Map();
   }
 
-  static getController(name: string): ControllerMetadata {
-    const controller = this.controllers.get(name);
-
-    if (!controller) {
-      throw new Error();
-    }
-
-    return controller;
+  static getController(cls: ControllerConstructor): ControllerMetadata | null {
+    return this.controllers.get(cls) ?? null;
   }
 }

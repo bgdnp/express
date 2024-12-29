@@ -8,6 +8,7 @@ export { container } from '@di/container';
 
 export * from '@http/decorators';
 export * from '@http/exceptions';
+export { HttpMiddleware } from '@http/http-middleware';
 export { HttpRequest } from '@http/http-request';
 export { HttpResponse } from '@http/http-response';
 
