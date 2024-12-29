@@ -1,10 +1,6 @@
+import { DefaultRequest } from '@common/types';
 import express from 'express';
 
-type DefaultRequest = {
-  Body: unknown;
-  Params: unknown;
-  Query: unknown;
-};
 type SpecifiedRequest<T extends Partial<DefaultRequest>> = T & Omit<DefaultRequest, keyof T>;
 type Body<T extends Partial<DefaultRequest>> = SpecifiedRequest<T>['Body'];
 type Params<T extends Partial<DefaultRequest>> = SpecifiedRequest<T>['Params'];
@@ -17,7 +13,7 @@ type Parsers<T extends Partial<DefaultRequest>> = {
   query?: Parser<Query<T>>;
 };
 
-export class HttpRequest<T extends Partial<DefaultRequest>> {
+export class HttpRequest<T extends Partial<DefaultRequest> = DefaultRequest> {
   private readonly req: express.Request;
   private readonly parsers: Parsers<T>;
   private _body: Body<T> = undefined;

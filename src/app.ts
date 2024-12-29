@@ -1,6 +1,6 @@
 import { ErrorCode, HttpStatus } from '@common/enums';
 import { Exception } from '@common/exception';
-import { ControllerConstructor, Handler, HandlerResult } from '@common/types';
+import { ArgsMapper, ControllerConstructor, Handler, HandlerResult } from '@common/types';
 import { HttpException } from '@http/exceptions';
 import { HttpRequest } from '@http/http-request';
 import { RouterMetadata } from '@http/router-metadata';
@@ -26,11 +26,12 @@ function handleError(err: unknown, res: express.Response) {
   return res.status(HttpStatus.InternalServerError).json({ code: ErrorCode.UnexpectedError });
 }
 
-function createHandler(handler: Handler): express.Handler {
+function createHandler(handler: Handler, argsMapper?: ArgsMapper): express.Handler {
   return (req, res) => {
     const request = new HttpRequest(req);
+    const args = argsMapper ? argsMapper(request) : [request];
 
-    handler(request)
+    handler(...args)
       .then((result) => handleSuccess(result, res))
       .catch((err) => handleError(err, res));
   };
@@ -41,8 +42,8 @@ function useController(app: express.Express, controller: ControllerConstructor) 
   const router = express.Router();
   const instance = new cls();
 
-  routes.forEach(({ method, path, handler }) => {
-    router[method](path, createHandler(handler.bind(instance)));
+  routes.forEach(({ method, path, handler, argsMapper }) => {
+    router[method](path, createHandler(handler.bind(instance), argsMapper));
   });
 
   app.use(prefix, router);

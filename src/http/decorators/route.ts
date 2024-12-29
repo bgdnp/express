@@ -4,7 +4,10 @@ import { RouterMetadata } from '../router-metadata';
 function Route(method: HttpMethod, path: RoutePath) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return (handler: Handler, context: ClassMethodDecoratorContext) => {
-    RouterMetadata.setRoute({ method, path, handler });
+    const route = RouterMetadata.getRoute(handler) ?? {};
+    const metadata = { ...route, method, path, handler };
+
+    RouterMetadata.setRoute(handler, metadata);
   };
 }
 
