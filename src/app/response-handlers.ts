@@ -1,9 +1,15 @@
+import express from 'express';
+
+import { LOGGER, MIDDLEWARE_NEXT, MIDDLEWARE_SKIP } from '@common/constants';
 import { ErrorCode, HttpStatus } from '@common/enums';
 import { Exception } from '@common/exception';
 import { HandlerResult } from '@common/types';
+
+import { container } from '@di/container';
+
 import { HttpException } from '@http/exceptions';
-import { NEXT, SKIP } from '@http/http-middleware';
-import express from 'express';
+
+import { Logger } from '@utilities/logger';
 
 export function handleSuccess(result: HandlerResult, res: express.Response) {
   if (result.status === 204) {
@@ -20,11 +26,11 @@ export function handleMiddleware(
   skip: 'route' | 'router',
 ) {
   if (typeof result === 'symbol') {
-    if (result === NEXT) {
+    if (result === MIDDLEWARE_NEXT) {
       return next();
     }
 
-    if (result === SKIP) {
+    if (result === MIDDLEWARE_SKIP) {
       return next(skip);
     }
 
@@ -35,6 +41,10 @@ export function handleMiddleware(
 }
 
 export function handleError(err: unknown, res: express.Response) {
+  const logger = container.get<Logger>(LOGGER);
+
+  logger.error(err);
+
   if (err instanceof HttpException) {
     return res.status(err.status).json(err.response);
   }

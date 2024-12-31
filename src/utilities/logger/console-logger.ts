@@ -1,7 +1,9 @@
+import { LOG_LEVEL } from '@common/constants';
+import { LogLevel } from '@common/enums';
+
 import { container } from '@di/container';
-import { LogLevel } from '../../common/enums/log-level';
+
 import { Logger } from './logger.interface';
-import { LOG_LEVEL } from './constants';
 
 export class ConsoleLogger implements Logger {
   private level: LogLevel;

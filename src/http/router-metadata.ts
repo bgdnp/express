@@ -1,4 +1,5 @@
 import { ArgsMapper, ControllerConstructor, Handler, HttpMethod, RoutePath } from '@common/types';
+
 import { HttpMiddleware } from './http-middleware';
 
 type RouteMetadata = {

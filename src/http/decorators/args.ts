@@ -1,4 +1,5 @@
 import { ArgsMapper, DefaultRequest, Handler } from '@common/types';
+
 import { RouterMetadata } from '../router-metadata';
 
 export function Args<T extends Partial<DefaultRequest> = DefaultRequest>(mapper: ArgsMapper<T>) {

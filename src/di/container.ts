@@ -1,4 +1,5 @@
 import { Constructor } from '@common/types';
+
 import { NoSuchKeyException } from './exceptions';
 
 type ValueMetadata<T = unknown> = {

@@ -1,8 +1,13 @@
+import express from 'express';
+
+import { LOG_LEVEL, LOGGER } from '@common/constants';
 import { LogLevel } from '@common/enums';
 import { Constructor, ControllerConstructor } from '@common/types';
+
 import { container } from '@di/container';
-import { ConsoleLogger, LOG_LEVEL, LOGGER, Logger } from '@utilities/logger';
-import express from 'express';
+
+import { ConsoleLogger, Logger } from '@utilities/logger';
+
 import { useController } from './use-controller';
 
 type CreateAppOptions = {

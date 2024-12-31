@@ -1,6 +1,9 @@
-import { ControllerConstructor } from '@common/types';
-import { RouterMetadata } from '@http/router-metadata';
 import express from 'express';
+
+import { ControllerConstructor } from '@common/types';
+
+import { RouterMetadata } from '@http/router-metadata';
+
 import { createHandler, createMiddleware } from './handlers';
 
 export function useController(app: express.Express, controller: ControllerConstructor) {

@@ -1,4 +1,5 @@
 import { HttpStatus } from '@common/enums';
+
 import { HttpRequest } from '@http/http-request';
 
 export type Constructor<T = object> = {

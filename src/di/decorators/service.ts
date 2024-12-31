@@ -1,4 +1,5 @@
 import { Constructor } from '@common/types';
+
 import { container } from '../container';
 
 export function Service(key?: string | symbol) {

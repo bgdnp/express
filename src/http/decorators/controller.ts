@@ -1,4 +1,5 @@
 import { ControllerConstructor, RoutePath } from '@common/types';
+
 import { RouterMetadata } from '../router-metadata';
 
 export function Controller(prefix: RoutePath = '/') {

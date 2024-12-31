@@ -1,4 +1,5 @@
 import { Handler, HttpMethod, RoutePath } from '@common/types';
+
 import { RouterMetadata } from '../router-metadata';
 
 function Route(method: HttpMethod, path: RoutePath) {

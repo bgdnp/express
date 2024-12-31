@@ -41,6 +41,9 @@
     "url": "https://github.com/bgdnp/express/issues"
   },
   "homepage": "https://github.com/bgdnp/express#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
@@ -54,8 +57,5 @@
     "prettier": "^3.4.2",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "express": "^4.21.2"
   }
 }
