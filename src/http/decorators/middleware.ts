@@ -5,23 +5,11 @@ import { RouterMetadata } from '@http/router-metadata';
 import { HttpMiddleware } from '../http-middleware';
 
 function routeMiddleware(handler: Handler, middlewares: HttpMiddleware[]) {
-  const route = RouterMetadata.getRoute(handler);
-  const metadata = {
-    ...(route ?? {}),
-    middlewares: [...(route?.middlewares ?? []), ...middlewares],
-  };
-
-  RouterMetadata.setRoute(handler, metadata);
+  RouterMetadata.setRoute(handler, { middlewares });
 }
 
 function controllerMiddleware(cls: ControllerConstructor, middlewares: HttpMiddleware[]) {
-  const controller = RouterMetadata.getController(cls);
-  const metadata = {
-    ...(controller ?? {}),
-    middlewares: [...(controller?.middlewares ?? []), ...middlewares],
-  };
-
-  RouterMetadata.setController(cls, metadata);
+  RouterMetadata.setController(cls, { middlewares });
 }
 
 export function Middleware(...middlewares: HttpMiddleware[]) {

@@ -16,12 +16,12 @@ export function useController(app: express.Express, controller: ControllerConstr
   const router = express.Router();
   const instance = new controller();
 
-  metadata.middlewares?.forEach((middleware) => {
+  metadata.middlewares.forEach((middleware) => {
     router.use(createMiddleware(middleware, 'router'));
   });
 
   metadata.routes.forEach(({ method, path, handler, argsMapper, middlewares }) => {
-    middlewares?.forEach((middleware) => {
+    middlewares.forEach((middleware) => {
       router[method](path, createMiddleware(middleware, 'route'));
     });
 

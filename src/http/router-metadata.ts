@@ -6,15 +6,15 @@ type RouteMetadata = {
   method: HttpMethod;
   path: RoutePath;
   handler: Handler;
-  argsMapper?: ArgsMapper;
-  middlewares?: HttpMiddleware[];
+  argsMapper: ArgsMapper;
+  middlewares: HttpMiddleware[];
 };
 
 type ControllerMetadata = {
   prefix: RoutePath;
   cls: ControllerConstructor;
   routes: RouteMetadata[];
-  middlewares?: HttpMiddleware[];
+  middlewares: HttpMiddleware[];
 };
 
 export class RouterMetadata {
@@ -22,7 +22,15 @@ export class RouterMetadata {
   private static controllers: Map<ControllerConstructor, ControllerMetadata> = new Map();
 
   static setRoute(handler: Handler, metadata: Partial<RouteMetadata>) {
-    this.routes.set(handler, metadata as RouteMetadata);
+    const current = this.getRoute(handler) ?? this.defaultRouteMetadata(handler);
+
+    this.routes.set(handler, {
+      method: metadata.method ?? current.method,
+      path: metadata.path ?? current.path,
+      handler: handler,
+      argsMapper: metadata.argsMapper ?? current.argsMapper,
+      middlewares: [...current.middlewares, ...(metadata.middlewares ?? [])],
+    });
   }
 
   static getRoute(handler: Handler): RouteMetadata | null {
@@ -30,14 +38,38 @@ export class RouterMetadata {
   }
 
   static setController(cls: ControllerConstructor, metadata: Partial<ControllerMetadata>) {
+    const current = this.getController(cls) ?? this.defaultControllerMetadata(cls);
+
     this.controllers.set(cls, {
-      ...metadata,
-      routes: [...this.routes.values()],
-    } as ControllerMetadata);
+      prefix: metadata.prefix ?? current.prefix,
+      cls: cls,
+      routes: [...current.routes, ...this.routes.values()],
+      middlewares: [...current.middlewares, ...(metadata.middlewares ?? [])],
+    });
+
     this.routes = new Map();
   }
 
   static getController(cls: ControllerConstructor): ControllerMetadata | null {
     return this.controllers.get(cls) ?? null;
+  }
+
+  private static defaultControllerMetadata(cls: ControllerConstructor): ControllerMetadata {
+    return {
+      prefix: '/',
+      cls: cls,
+      routes: [],
+      middlewares: [],
+    };
+  }
+
+  private static defaultRouteMetadata(handler: Handler): RouteMetadata {
+    return {
+      method: 'get',
+      path: '/',
+      handler: handler,
+      argsMapper: (request) => [request],
+      middlewares: [],
+    };
   }
 }
