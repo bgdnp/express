@@ -1,6 +1,5 @@
-import { HttpStatus } from '@common/enums';
-
 import { HttpRequest } from '@http/http-request';
+import { HttpResponse } from '@http/http-response';
 
 export type Constructor<T = object> = {
   new (...args: unknown[]): T;
@@ -14,13 +13,8 @@ export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 
 
 export type RoutePath = `/${string}`;
 
-export type HandlerResult<TBody extends object = object> = {
-  status: HttpStatus;
-  body?: TBody;
-};
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Handler = (...args: any[]) => Promise<HandlerResult>;
+export type Handler = (...args: any[]) => Promise<HttpResponse>;
 
 export type DefaultRequest = {
   Body: unknown;
@@ -31,3 +25,5 @@ export type DefaultRequest = {
 export type ArgsMapper<T extends Partial<DefaultRequest> = DefaultRequest> = (
   request: HttpRequest<T>,
 ) => unknown[];
+
+export type Enumerate<T extends object> = T[keyof T];

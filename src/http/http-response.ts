@@ -1,20 +1,28 @@
 import { HttpStatus } from '@common/enums';
-import { HandlerResult } from '@common/types';
+
+type HttpResponseInput = {
+  status: HttpStatus;
+  body?: object;
+};
 
 export class HttpResponse {
-  static success(status: HttpStatus, body?: object): HandlerResult {
-    return { status, body };
+  readonly status: HttpStatus;
+  readonly body?: object;
+
+  constructor({ status, body }: HttpResponseInput) {
+    this.status = status;
+    this.body = body;
   }
 
-  static ok(body?: object): HandlerResult {
-    return this.success(HttpStatus.OK, body);
+  static ok(body: object): HttpResponse {
+    return new HttpResponse({ status: HttpStatus.OK, body });
   }
 
-  static created(body?: object): HandlerResult {
-    return this.success(HttpStatus.Created, body);
+  static created(body: object): HttpResponse {
+    return new HttpResponse({ status: HttpStatus.Created, body });
   }
 
-  static noContent(): HandlerResult {
-    return this.success(HttpStatus.NoContent);
+  static noContent(): HttpResponse {
+    return new HttpResponse({ status: HttpStatus.NoContent });
   }
 }

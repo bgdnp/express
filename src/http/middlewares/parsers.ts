@@ -1,7 +1,7 @@
-import { HandlerResult } from '@common/types';
 import { HttpRequest } from '@http/http-request';
 import { HttpMiddleware } from '../http-middleware';
 import { ValidationException } from '@http/exceptions';
+import { HttpResponse } from '@http/http-response';
 
 type Schema<T> = {
   parse: (data: unknown) => T;
@@ -15,7 +15,7 @@ class Parser<T> extends HttpMiddleware {
     super();
   }
 
-  async handle(request: HttpRequest<object>): Promise<HandlerResult | symbol> {
+  async handle(request: HttpRequest<object>): Promise<HttpResponse | symbol> {
     try {
       const parsed = this.schema.parse(request[this.key]);
 

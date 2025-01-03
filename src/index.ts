@@ -1,5 +1,4 @@
 export { HttpStatus } from '@common/enums';
-export { HandlerResult } from '@common/types';
 export { Exception } from '@common/exception';
 
 export * from '@di/decorators';

@@ -6,7 +6,7 @@ export class NotFoundException extends HttpException {
   constructor(message?: string) {
     super({
       status: HttpStatus.NotFound,
-      code: ErrorCode.HTTP_NotFound,
+      code: ErrorCode.NotFound,
       message: message ?? 'Route not found.',
     });
   }

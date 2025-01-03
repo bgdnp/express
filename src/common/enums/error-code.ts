@@ -1,8 +1,12 @@
-export enum ErrorCode {
-  DI_NoSuchKey = 'NO_SUCH_KEY',
-  HTTP_ValidationFailed = 'VALIDATION_FAILED',
-  HTTP_Unauthorized = 'UNAUTHORIZED',
-  HTTP_NotFound = 'NOT_FOUND',
-  UnexpectedError = 'UNEXPECTED_ERROR',
-  RequestModificationForbidden = 'REQUEST_MODIFICATION_FORBIDDEN',
-}
+import { Enumerate } from '@common/types';
+
+export const ErrorCode = {
+  NoSuchKey: 'NO_SUCH_KEY',
+  ValidationFailed: 'VALIDATION_FAILED',
+  Unauthorized: 'UNAUTHORIZED',
+  NotFound: 'NOT_FOUND',
+  UnexpectedError: 'UNEXPECTED_ERROR',
+  RequestModificationForbidden: 'REQUEST_MODIFICATION_FORBIDDEN',
+} as const;
+
+export type ErrorCode = Enumerate<typeof ErrorCode>;

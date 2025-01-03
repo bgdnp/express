@@ -3,15 +3,15 @@ import express from 'express';
 import { LOGGER, MIDDLEWARE_NEXT, MIDDLEWARE_SKIP } from '@common/constants';
 import { ErrorCode, HttpStatus } from '@common/enums';
 import { Exception } from '@common/exception';
-import { HandlerResult } from '@common/types';
 
 import { container } from '@di/container';
 
 import { HttpException } from '@http/exceptions';
 
 import { Logger } from '@utilities/logger';
+import { HttpResponse } from '@http/http-response';
 
-export function handleSuccess(result: HandlerResult, res: express.Response) {
+export function handleSuccess(result: HttpResponse, res: express.Response) {
   if (result.status === 204) {
     return res.status(result.status).send();
   }
@@ -20,7 +20,7 @@ export function handleSuccess(result: HandlerResult, res: express.Response) {
 }
 
 export function handleMiddleware(
-  result: symbol | HandlerResult,
+  result: symbol | HttpResponse,
   res: express.Response,
   next: express.NextFunction,
   skip: 'route' | 'router',

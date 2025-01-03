@@ -72,6 +72,15 @@ export class Container {
     return this.pool.get(key) as T;
   }
 
+  has(key: string | symbol): boolean;
+  has(cls: Constructor): boolean;
+  has(keyOrCls: string | symbol | Constructor): boolean {
+    const key =
+      typeof keyOrCls === 'string' || typeof keyOrCls === 'symbol' ? keyOrCls : keyOrCls.name;
+
+    return this.metadata.has(key);
+  }
+
   private isValue<T>(metadata: Metadata<T>): metadata is ValueMetadata<T> {
     return (metadata as ValueMetadata<T>).value !== undefined;
   }

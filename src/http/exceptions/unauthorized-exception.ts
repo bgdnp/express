@@ -6,7 +6,7 @@ export class UnauthorizedException extends HttpException {
   constructor(message?: string) {
     super({
       status: HttpStatus.Unauthorized,
-      code: ErrorCode.HTTP_Unauthorized,
+      code: ErrorCode.Unauthorized,
       message: message ?? 'Unauthorized.',
     });
   }

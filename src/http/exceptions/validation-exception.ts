@@ -11,7 +11,7 @@ export class ValidationException extends HttpException {
   constructor(options?: ValidationExceptionOptions) {
     super({
       status: HttpStatus.BadRequest,
-      code: ErrorCode.HTTP_ValidationFailed,
+      code: ErrorCode.ValidationFailed,
       message: options?.message ?? 'Validation failed.',
       cause: options?.cause,
     });

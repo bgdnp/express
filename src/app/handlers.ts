@@ -10,12 +10,12 @@ import { HttpRequest } from '@http/http-request';
 
 import { handleError, handleMiddleware, handleSuccess } from './response-handlers';
 
-export function createHandler(handler: Handler, argsMapper?: ArgsMapper): express.Handler {
+export function createHandler(handler: Handler, argsMapper: ArgsMapper): express.Handler {
   return (req, res) => {
     container.set({ key: CONTEXT, value: 'handler' });
 
     const request = new HttpRequest(req);
-    const args = argsMapper ? argsMapper(request) : [request];
+    const args = argsMapper(request);
 
     handler(...args)
       .then((result) => handleSuccess(result, res))

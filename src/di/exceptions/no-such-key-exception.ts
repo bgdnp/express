@@ -3,6 +3,6 @@ import { Exception } from '@common/exception';
 
 export class NoSuchKeyException extends Exception {
   constructor(message?: string) {
-    super({ code: ErrorCode.DI_NoSuchKey, message });
+    super({ code: ErrorCode.NoSuchKey, message });
   }
 }
